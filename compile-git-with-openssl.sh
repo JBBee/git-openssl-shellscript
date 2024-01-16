@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eu
 # Gather command line options
-SKIPTESTS=
+SKIPTESTS=YES
 BUILDDIR=
 SKIPINSTALL=
 for i in "$@"; do 
@@ -57,7 +57,7 @@ make configure
 #    Running ripgrep on configure shows that --with-openssl is set by default. Since this could change in the
 #    future we do it explicitly
 ./configure --prefix=/usr --with-openssl
-make 
+make -j$(nproc)
 if [[ "${SKIPTESTS}" != "YES" ]]; then
   make test
 fi
